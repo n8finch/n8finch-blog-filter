@@ -150,41 +150,21 @@ const SearchForm = ({
     onChange: event => setSearch(event.target.value)
   }));
 };
-const graphqlEndpoint = "https://n8finch2024.local/graphql";
-const query = `
-{
-  posts(first: 500) {
-    nodes {
-      id
-      title
-      excerpt
-      date
-      uri
-      featuredImage {
-        node {
-          sourceUrl(size: MEDIUM)
-        }
-      }
-    }
-  }
-}
-`;
+
+// const allPostsEndpoint = "/wp-json/n8finch-rest-api/v1/all-the-posts";
+const allPostsEndpoint = "/wp-content/uploads/all-the-posts.json";
 const requestOptions = {
-  method: "POST",
+  method: "GET",
   headers: {
     "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    query
-  })
+  }
 };
 function BlogFilterApp() {
   const [posts, setPosts] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
   const [search, setSearch] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
   const [loading, setLoading] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    console.log("Hello from JavaScript!");
-    fetch(graphqlEndpoint, requestOptions).then(response => response.json()).then(data => {
+    fetch(allPostsEndpoint, requestOptions).then(response => response.json()).then(data => {
       const fetchedPosts = data.data.posts.nodes;
       const posts = fetchedPosts.map(post => {
         return {
@@ -193,7 +173,7 @@ function BlogFilterApp() {
           excerpt: post.excerpt,
           date: post.date,
           uri: post.uri,
-          featuredImage: post.featuredImage ? post.featuredImage.node.sourceUrl : null
+          featuredImage: post.featuredImage ? post.featuredImage.node.sourceUrl.replace('https://n8finch2024.local//Users/natefinch/Local Sites/n8finch2024/app/public', '') : null
         };
       });
       setPosts(posts);

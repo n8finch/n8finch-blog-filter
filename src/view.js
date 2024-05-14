@@ -60,30 +60,12 @@ const SearchForm = ({ search, setSearch }) => {
 	);
 };
 
-const graphqlEndpoint = "https://n8finch2024.local/graphql";
-const query = `
-{
-  posts(first: 500) {
-    nodes {
-      id
-      title
-      excerpt
-      date
-      uri
-      featuredImage {
-        node {
-          sourceUrl(size: MEDIUM)
-        }
-      }
-    }
-  }
-}
-`;
+// const allPostsEndpoint = "/wp-json/n8finch-rest-api/v1/all-the-posts";
+const allPostsEndpoint = "/wp-content/uploads/all-the-posts.json";
 
 const requestOptions = {
-	method: "POST",
+	method: "GET",
 	headers: { "Content-Type": "application/json" },
-	body: JSON.stringify({ query }),
 };
 
 function BlogFilterApp() {
@@ -92,8 +74,7 @@ function BlogFilterApp() {
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		console.log("Hello from JavaScript!");
-		fetch(graphqlEndpoint, requestOptions)
+		fetch(allPostsEndpoint, requestOptions)
 			.then((response) => response.json())
 			.then((data) => {
 				const fetchedPosts = data.data.posts.nodes;
@@ -105,7 +86,7 @@ function BlogFilterApp() {
 						date: post.date,
 						uri: post.uri,
 						featuredImage: post.featuredImage
-							? post.featuredImage.node.sourceUrl
+							? post.featuredImage.node.sourceUrl.replace('https://n8finch2024.local//Users/natefinch/Local Sites/n8finch2024/app/public', '')
 							: null,
 					};
 				});
@@ -119,7 +100,11 @@ function BlogFilterApp() {
 	return (
 		<div>
 			<SearchForm search={search} setSearch={setSearch} />
-			{loading && <p><em>Loading posts...</em></p>}
+			{loading && (
+				<p>
+					<em>Loading posts...</em>
+				</p>
+			)}
 			<PostList
 				posts={posts.filter((post) =>
 					post.title.toLowerCase().includes(search.toLowerCase()),

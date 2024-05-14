@@ -17,14 +17,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+// define( 'UPLOADS', trailingslashit( WP_CONTENT_DIR ) . 'uploads' );
+
 function create_block_n8finch_blog_filter_block_init() {
 	register_block_type( __DIR__ . '/build' );
 }
 add_action( 'init', 'create_block_n8finch_blog_filter_block_init' );
 
-/*
+/**
  * Increase perPage for product categories. This is needed to build out the sidebar accordion.
  */
 add_filter( 'graphql_connection_max_query_amount', function ( int $max_amount, $source, array $args, $context, $info ) {
 	return 500;
 }, 10, 5 );
+
+require_once plugin_dir_path( __FILE__ ) . 'get-all-posts-endpoint.php';
