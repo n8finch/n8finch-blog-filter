@@ -1,0 +1,56 @@
+/**
+ * The following styles get applied both on the front of your site
+ * and in the editor.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+
+.wp-block-create-block-n8finch-blog-filter {
+	background-color: #21759b;
+	color: #fff;
+	padding: 2px;
+}
+
+#n8finch-blog-filter {
+	input {
+		width: 90%;
+	}
+
+	ul {
+		list-style: none;
+		padding-left: 0;
+	}
+}
+
+.postItem-wrapper {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	margin-bottom: 2rem;
+
+	.image-wrapper {
+		max-width: 150px;
+
+		img {
+			width: 100%;
+			height: auto;
+		}
+	}
+	.content-wrapper {
+		max-width: 460px;
+
+		a {
+			text-decoration: none;
+
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+
+		h2,
+		p {
+			margin-bottom: 1rem;
+			margin-top: 0;
+		}
+	}
+}
