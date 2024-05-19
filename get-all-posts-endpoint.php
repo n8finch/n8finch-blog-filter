@@ -67,12 +67,19 @@ class Get_All_Posts_Endpoint
 										nodes {
 											id
 											title
-											excerpt
+											excerpt(format: RENDERED)
 											date
 											uri
 											featuredImage {
 												node {
 													sourceUrl(size: MEDIUM)
+												}
+											}
+											categories{
+												nodes{
+													id
+													name
+													uri
 												}
 											}
 										}

@@ -22,6 +22,15 @@ const PostItem = ({ post }) => {
 							year: "numeric",
 							month: "long",
 							day: "numeric",
+						})}{" "}
+						| Categories:{" "}
+						{post.categories.nodes.map((category, index) => {
+							return (
+								<a key={category.id} href={category.uri}>
+									{category.name}
+									{index < post.categories.nodes.length - 1 && ", "}
+								</a>
+							);
 						})}
 					</em>
 				</small>
@@ -85,8 +94,12 @@ function BlogFilterApp() {
 						excerpt: post.excerpt,
 						date: post.date,
 						uri: post.uri,
+						categories: post.categories ?? { nodes: [] },
 						featuredImage: post.featuredImage
-							? post.featuredImage.node.sourceUrl.replace('https://n8finch2024.local//Users/natefinch/Local Sites/n8finch2024/app/public', '')
+							? post.featuredImage.node.sourceUrl.replace(
+									"https://n8finch2024.local//Users/natefinch/Local Sites/n8finch2024/app/public",
+									"",
+							  )
 							: null,
 					};
 				});
@@ -106,8 +119,13 @@ function BlogFilterApp() {
 				</p>
 			)}
 			<PostList
-				posts={posts.filter((post) =>
-					post.title.toLowerCase().includes(search.toLowerCase()),
+				posts={posts.filter(
+					(post) =>
+						// if the post title or categories include the search term
+						post.title.toLowerCase().includes(search.toLowerCase()) ||
+						post.categories.nodes.some((category) =>
+							category.name.toLowerCase().includes(search.toLowerCase()),
+						),
 				)}
 			/>
 		</div>
