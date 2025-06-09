@@ -97,8 +97,8 @@ function BlogFilterApp() {
 						categories: post.categories ?? { nodes: [] },
 						featuredImage: post.featuredImage
 							? post.featuredImage.node.sourceUrl.replace(
-									"https://n8finch2024.local//Users/natefinch/Local Sites/n8finch2024/app/public",
-									"",
+									"https://n8finch-from-instawp.local/",
+									"/",
 							  )
 							: null,
 					};

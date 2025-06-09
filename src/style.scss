@@ -23,14 +23,20 @@
 }
 
 .postItem-wrapper {
-	display: flex;
+	display: grid;
+  grid-template-columns: 200px 1fr;
+	grid-template-rows: auto;
+  grid-gap: 10px;
+	grid-gap: 1rem;
 	flex-wrap: wrap;
 	justify-content: space-between;
 	margin-bottom: 2rem;
 
-	.image-wrapper {
-		max-width: 150px;
+	@media (max-width: 600px) {
+		grid-template-columns: 1fr;
+	}
 
+	.image-wrapper {
 		img {
 			width: 100%;
 			height: auto;
